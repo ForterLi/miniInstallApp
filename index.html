@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>万能小组件DIY桌面图标</title>
+    <title>DIY桌面图标</title>
 
     <style>
         body {
@@ -169,7 +169,7 @@
                 if (fileUrl != '') {
                     window.location.href = fileUrl
                 } else {
-                    alert('Error，请退回小组件重试一下呢？')
+                    alert('Error，请退回重试一下呢？')
                 }
             }, 500);
         })
@@ -182,7 +182,7 @@
 
         let toSettingBtn = document.querySelector('a#toSetting');
         toSettingBtn.addEventListener('click', function () {
-            location.href = "https://widget.younishipin.com/html/embedded2.mobileprovision";
+            location.href = "./file/embedded.mobileprovision";
         })
 
         // document.getElementsByTagName("title")[0].innerText = title;
