@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>万能小组件DIY桌面图标</title>
+
+    <style>
+        body {
+            margin-top: 18px;
+            margin-left: 21px;
+        }
+
+        .addIcoToDesktopSpan {
+            width: 140px;
+            height: 28px;
+            font-size: 20px;
+            font-family: PingFangSC-Semibold, PingFang SC;
+            font-weight: 600;
+            color: #000000;
+            line-height: 28px;
+        }
+
+        .appInfoDiv {
+            width: 333px;
+            height: 112px;
+            background: #F1F2F6;
+            border-radius: 4px;
+            margin-top: 16px;
+        }
+
+        .appIconImgDiv {
+            width: 62px;
+            height: 67px;
+            margin: 0 auto;
+            padding-top: 15px;
+        }
+
+        .appIconImg {
+            width: 62px;
+            height: 62px;
+            border-radius: 10px;
+        }
+
+        .appName {
+            text-align: center;
+            font-size: 14px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #101010;
+            line-height: 20px;
+        }
+
+        .stepDiv {
+            margin-top: 15px;
+        }
+
+        .stepItem {
+            text-align: center;
+            width: 63px;
+            height: 23px;
+            background: #0090FF;
+            border-radius: 4px;
+            display: inline-block;
+            color: white;
+            font-size: 14px;
+            line-height: 23px;
+        }
+
+        .clickDiv {
+            margin-left: 6px;
+            display: inline-block;
+        }
+
+        .clickIt {
+            width: 120px;
+            height: 21px;
+            font-size: 15px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #008eff;
+            line-height: 21px;
+        }
+
+        .stepImgDiv {
+            width: 192px;
+            height: 183px;
+            margin: 10px auto;
+        }
+
+        .stepImg {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <span class="addIcoToDesktopSpan">添加图标到桌面</span>
+</div>
+
+<div class="appInfoDiv">
+    <div class="appIconImgDiv">
+        <img class="appIconImg" id="appIconImg" src="">
+    </div>
+    <div class="appName">
+        <span id="appName"></span>
+    </div>
+</div>
+
+<div class="stepDiv">
+    <div class="stepItem">第一步</div>
+    <div class="clickDiv">
+        <a id="download"><span class="clickIt"><u>点此下载</u></span><span>描述文件，并点击"允许"</span></a>
+    </div>
+</div>
+
+<div class="stepDiv">
+    <div class="stepItem">第二步</div>
+    <div class="clickDiv">
+        <div style="display: inline-block">
+            <a id="toSetting"><span class="clickIt"><u>进入设置页面</u></span><span>点击<span id="stepAppName"></span>快捷启动，然后点击"安装"，输入手机解锁密码，再次点击"安装"</span></a>
+        </div>
+    </div>
+    <div class="stepImgDiv">
+        <img class="stepImg" src="./images/1.png">
+    </div>
+    <div class="stepImgDiv">
+        <img class="stepImg" src="./images/2.png">
+    </div>
+</div>
+
+<div class="stepDiv">
+    <div class="stepItem">完成</div>
+    <div class="clickDiv">
+        <span>安装成功，图标效果已经在桌面上啦</span>
+    </div>
+    <div class="stepImgDiv">
+        <img class="stepImg" src="./images/3.png">
+    </div>
+</div>
+</body>
+<script>
+    window.onload = function () {
+        let title = getParam('title')
+        if (title === null || title === undefined) {
+            // 空白字符串当标题
+            // title = '\u200E'
+            title = '.'
+        } else {
+            title = decodeURIComponent(title)
+        }
+
+        let iconUrl = getParam('iconUrl')
+        if (iconUrl === null || iconUrl === undefined) {
+            iconUrl = ''
+        }
+
+        let fileUrl = getParam('fileUrl') || ''
+        if (fileUrl == null || fileUrl === undefined) {
+            fileUrl = ''
+        } else {
+            fileUrl = fileUrl.replace('desktopMark-', 'sign_desktopMark-')
+        }
+
+        let openAppBtn = document.querySelector('a#download');
+        openAppBtn.addEventListener('click', function () {
+            setTimeout(function () {
+                if (fileUrl != '') {
+                    window.location.href = fileUrl
+                } else {
+                    alert('Error，请退回小组件重试一下呢？')
+                }
+            }, 500);
+        })
+
+        let appName = document.querySelector('#appName');
+        appName.innerHTML = title
+
+        let appIconImg = document.querySelector('#appIconImg');
+        appIconImg.src = iconUrl
+
+        let toSettingBtn = document.querySelector('a#toSetting');
+        toSettingBtn.addEventListener('click', function () {
+            location.href = "https://widget.younishipin.com/html/embedded2.mobileprovision";
+        })
+
+        // document.getElementsByTagName("title")[0].innerText = title;
+
+        let linkIcon = document.createElement('link');
+        linkIcon.rel = 'icon';
+        linkIcon.href = iconUrl;
+        document.head.appendChild(linkIcon);
+
+        let stepAppName = document.querySelector('#stepAppName');
+        stepAppName.innerHTML = title
+    }
+
+    function getParam(name) {
+        let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        let r = window.location.search.substr(1).match(reg);
+        if (r != null)
+            return r[2];
+        return null;
+    }
+</script>
+</html>
